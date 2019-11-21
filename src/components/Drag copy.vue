@@ -1,8 +1,5 @@
 <script>
-// import { EventBus } from './EventBus'
-import EventBusConstructor from './EventBus'
-console.error(new Date().getTime())
-
+import { EventBus } from './EventBus'
 let dragged = null
 function handleDragStart (e) {
   e.target.style.opacity = '.5'
@@ -84,12 +81,6 @@ const drag = {
       default: original => {
         return original
       }
-    },
-    option: {
-      type: Object,
-      validator (val) {
-        return ['move', 'copy'].find(v => v === val.type)
-      }
     }
   },
   data () {
@@ -104,26 +95,14 @@ const drag = {
       return this.$el
     }
   },
-  beforeCreate () {
-    let EventBus = new EventBusConstructor()
-    EventBus.$emit('test', 1111)
-    // EventBus.plus()
-    console.log('drag beforeCreate')
-  },
   created () {
-    console.log('drag created')
     this.list = JSON.parse(JSON.stringify(this.value))
   },
-  beforeMount () {
-    console.log('drag beforeMount')
-  },
+
   mounted () {
-    console.log('drag mounted')
-    // EventBus.$emit('test', 1111)
-    // console.log(this.rootContainer)
-    // EventBus.$emit('start', 1111)
-    //  EventBus.$on('start', value => console.log('start', value))
-    //  EventBus.$on('drop', value => console.log('drop', value))
+    console.log(this.rootContainer)
+    EventBus.$on('start', value => console.log('start', value))
+    EventBus.$on('drop', value => console.log('drop', value))
   },
   render (h) {
     let contianer = {
@@ -166,12 +145,10 @@ const drag = {
       return this.tag || this.element
     },
     handleDragStart (e, index, slot) {
-      // e.dataTransfer.effectAllowed = this.option.type
-      console.log(slot)
-      e.dataTransfer.setData('type', this.option.type)
-      e.dataTransfer.setData('index', index)
-      e.dataTransfer.setData('data', JSON.stringify(this.list[index]))
-      // EventBus.$emit('start', this.list[index])
+      // e.dataTransfer.effectAllowed = 'copy'
+      console.log('dragStart', index)
+      console.log(this.list)
+      EventBus.$emit('start', this.list[index])
       this.index = index
       e.target.style.opacity = '.5'
       this.dragged = e.target
@@ -181,33 +158,14 @@ const drag = {
       /**
        * @todo 这么设置的话就只能传json
        */
-      // e.dataTransfer.setData('text/plain', JSON.stringify({ a: 1 }))
+      e.dataTransfer.setData('text/plain', JSON.stringify({ a: 1 }))
       console.log('DragStart', e.target.id)
     },
-    handleDrop (e, toIndex, slot) {
-      // EventBus.$emit('drop', this.list[index])
-      console.log('drop', toIndex)
+    handleDrop (e, index, slot) {
+      EventBus.$emit('drop', this.list[index])
+      console.log('drop', index)
       e.preventDefault()
-      let fromIndex = e.dataTransfer.getData('index')
-      let fromdata = e.dataTransfer.getData('data')
-      let type = e.dataTransfer.getData('type')
-      console.log(fromIndex, fromdata, type)
-
-      if (type === 'move') {
-        this.list.splice(
-          fromIndex,
-          1,
-          ...this.list.splice(toIndex, 1, this.list[fromIndex])
-        )
-      } else if (type === 'copy') {
-
-      }
-
-      // this.list.push(JSON.parse(fromdata))
-      this.$emit('valueChange', this.list)
-      console.log(this.list)
-
-      // const sourceId = e.dataTransfer.getData('text/plain')
+      const sourceId = e.dataTransfer.getData('text/plain')
       // this.list.splice(this.index, 1, ...this.list.splice(index, 1, this.list[this.index]))
       // 原生的方法传index
       // this.list.splice(sourceId, 1, ...this.list.splice(index, 1, this.list[sourceId]))

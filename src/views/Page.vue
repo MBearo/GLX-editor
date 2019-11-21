@@ -1,11 +1,15 @@
 <template>
   <div class="page">
     <div>
-      <Drag v-model="list">
-        <component v-for="(item, index) in list" :key="item.id" :is="item.name"></component>
+      <Drag v-model="list" :option="{
+        type:'copy',
+        group:'aaa',
+        put:false
+      }">
+        <component v-for="(item, index) in list" :key="index" :is="item.name"></component>
       </Drag>
       <draggable v-model="list"  group="people">
-        <div class="a" v-for="element in list" :key="element.id">{{element.name}}</div>
+        <div class="a" v-for="(element,index ) in list" :key="index">{{element.name}}</div>
       </draggable>
     </div>
   </div>

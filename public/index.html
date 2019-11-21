@@ -1,17 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>glx-editor</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but glx-editor doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title>glx-editor</title>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but glx-editor doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+  <!-- <div id="gray" style="width: 200px;height:200px;background-color:#ccc;">
+
+  </div>
+  <div id="red" style="width: 200px;height:200px;background-color:red;">
+
+  </div>
+  <div id="blue" style="width: 100px;height:100px;background-color:blue;" draggable="true">
+
+  </div>
+  <script>
+    const gray = document.querySelector('#gray')
+    const red = document.querySelector('#red')
+    const blue = document.querySelector('#blue')
+
+    blue.addEventListener('dragstart',e=>{
+      console.log(e)
+      e.dataTransfer.setData('text/plain', '11111');
+      e.dataTransfer.setData('comName', '222');
+      e.dataTransfer.setData('text/plain2', e.target.id);
+      e.target.style.opacity = ".5";
+    })
+    blue.addEventListener('dragend',e=>{
+      e.target.style.opacity='1'
+    })
+    red.addEventListener('dragenter',e=>{
+      e.preventDefault()
+    })
+    red.addEventListener('dragover',e=>{
+      e.preventDefault()
+    })
+    red.addEventListener('dragleave',e=>{
+
+    })
+    red.addEventListener('drop',e=>{
+      const sourceId = e.dataTransfer.getData('text/plain')
+      const sourceId2 = e.dataTransfer.getData('comName')
+      console.log(sourceId,sourceId2)
+      console.log(e.dataTransfer.getData('text/plain2'))
+      e.target.appendChild(document.querySelector(`#blue`))
+    }) -->
+  </script>
+</body>
+
 </html>
